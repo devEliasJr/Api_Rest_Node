@@ -1,14 +1,17 @@
 import fastify from "fastify";
+import { knex } from "./database";
+import { env } from "./env";
+import { transactionsRoutes } from "./routes/transactions";
 
 const app = fastify();
 
-app.get("/hello", (req, res) => {
-  return "Hello world";
+app.register(transactionsRoutes, {
+  prefix: "transactions",
 });
 
 app
   .listen({
-    port: 3333,
+    port: env.PORT,
   })
   .then(() => {
     console.log("HTTP server listening on port");
